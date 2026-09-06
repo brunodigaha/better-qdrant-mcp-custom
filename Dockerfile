@@ -14,4 +14,7 @@ RUN uv pip install \
 RUN /opt/venv/bin/python -c \
     "import importlib.metadata; print('qdrant-client:', importlib.metadata.version('qdrant-client'))"
 
+# A imagem original testa /health, mas esse endpoint não existe
+HEALTHCHECK NONE
+
 USER mcp
