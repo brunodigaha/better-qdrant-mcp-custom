@@ -1,0 +1,30 @@
+services:
+  qdrant-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: unless-stopped
+
+    environment:
+      QDRANT_URL: http://qdrant:6333
+      QDRANT_API_KEY: ${QDRANT_API_KEY}
+
+      OPENAI_API_KEY: local
+      OPENAI_BASE_URL: http://embedding-server:7997/v1
+      OPENAI_EMBEDDING_MODEL: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+
+      MCP_TRANSPORT: streamable-http
+      MCP_HOST: 0.0.0.0
+      MCP_PORT: 8000
+      MCP_PATH: /mcp
+
+    expose:
+      - "8000"
+
+    networks:
+      - decoder_net
+
+networks:
+  decoder_net:
+    external: true
